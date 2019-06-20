@@ -1,4 +1,4 @@
-from keras.applications import ResNet50
+from keras.applications import VGG16
 from keras.preprocessing.image import img_to_array
 from keras.applications import imagenet_utils
 from PIL import Image
@@ -8,11 +8,13 @@ import io
 import werkzeug
 import datetime
 import os
+from mtranslate import translate
+
 
 # initialize our Flask application and the Keras model
 app = Flask(__name__)
 
-model = ResNet50(weights="imagenet")
+model = VGG16(weights="imagenet")
 print("loaded model")
 
 PROJECT_HOME = os.path.dirname(os.path.realpath(__file__))
@@ -81,10 +83,13 @@ def save():
 		results = imagenet_utils.decode_predictions(preds)
 		data["predictions"] = []
 
+
+		
+
 			# loop over the results and add them to the list of
 			# returned predictions
 		for (imagenetID, label, prob) in results[0]:
-			r = {"label": label, "probability": float(prob)}
+			r = {"label": translate(label,'tr'), "probability": float(prob)}
 			data["predictions"].append(r)
 
 			# indicate that the request was a success
@@ -122,7 +127,7 @@ def predict():
 		# loop over the results and add them to the list of
 		# returned predictions
 		for (imagenetID, label, prob) in results[0]:
-			r = {"label": label, "probability": float(prob)}
+			r = {"label": translate(label,'tr'), "probability": float(prob)}
 			data["predictions"].append(r)
 
 		# indicate that the request was a success
@@ -139,3 +144,4 @@ if __name__ == "__main__":
 
 	port = int(os.environ.get('PORT', 5000))
 	app.run(host='0.0.0.0', port=port)
+
