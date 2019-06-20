@@ -1,4 +1,4 @@
-from keras.applications import Resnet50
+from keras.applications import ResNet50
 from keras.preprocessing.image import img_to_array
 from keras.applications import imagenet_utils
 from PIL import Image
