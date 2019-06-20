@@ -1,4 +1,4 @@
-from keras.applications import VGG16
+from keras.applications import Resnet50
 from keras.preprocessing.image import img_to_array
 from keras.applications import imagenet_utils
 from PIL import Image
@@ -14,7 +14,7 @@ from mtranslate import translate
 # initialize our Flask application and the Keras model
 app = Flask(__name__)
 
-model = VGG16(weights="imagenet")
+model = ResNet50(weights="imagenet")
 print("loaded model")
 
 PROJECT_HOME = os.path.dirname(os.path.realpath(__file__))
